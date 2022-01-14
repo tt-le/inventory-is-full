@@ -14,21 +14,25 @@ class Base(db.Model):
 
 @dataclass
 class Item(Base):
-    product_code: int
+    id: int
     name:  str
     price:  float
     weight:  float
+    quantity: int
+    description: str
     
     __tablename__ = "Items"
     __table_args__ = {'extend_existing': True} 
-    product_code = db.Column(db.BigInteger)
+    # product_code = db.Column(db.BigInteger)
     name = db.Column(db.String)
     price = db.Column(db.Numeric)
     weight = db.Column(db.Numeric)
+    quantity = db.Column(db.BigInteger)
+    description = db.Column(db.Text, nullable=True)
+    # db.UniqueConstraint(product_code)
     # brand_id
     # supplier_id
     # description
-    # quantity
     # is_active
     # deleted
 
