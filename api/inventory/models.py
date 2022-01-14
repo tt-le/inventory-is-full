@@ -23,11 +23,10 @@ class Item(Base):
     
     __tablename__ = "Items"
     __table_args__ = {'extend_existing': True} 
-    # product_code = db.Column(db.BigInteger)
-    name = db.Column(db.String)
-    price = db.Column(db.Numeric)
-    weight = db.Column(db.Numeric)
-    quantity = db.Column(db.BigInteger)
+    name = db.Column(db.String, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
+    weight = db.Column(db.Numeric, nullable=False)
+    quantity = db.Column(db.BigInteger, nullable=False, default=0)
     description = db.Column(db.Text, nullable=True)
     # db.UniqueConstraint(product_code)
     # brand_id
