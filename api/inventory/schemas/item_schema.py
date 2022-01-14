@@ -5,10 +5,6 @@ create_item = {
     "description":"An item create request json",
     "type":"object",
     "properties":{
-       "id":{
-          "description":"The unique identifier for a product",
-          "type":"integer"
-       },
        "name":{
           "description":"Name of the product",
           "type":"string"
@@ -28,8 +24,8 @@ create_item = {
         "exclusiveMinimum": 0
        }
     },
+    "additionalProperties": False,
     "required":[
-       "id",
        "name",
        "weight",
        "price"
@@ -43,10 +39,6 @@ update_item = {
     "description":"An item update request json",
     "type":"object",
     "properties":{
-       "id":{
-          "description":"The unique identifier for a product",
-          "type":"integer"
-       },
        "name":{
           "description":"Name of the product",
           "type":"string"
@@ -66,6 +58,6 @@ update_item = {
         "exclusiveMinimum": 0
        }
     },
-    "minProperties": 2,
-    "required": ["id"]
+    "additionalProperties": False,
+    "minProperties": 1
  }
