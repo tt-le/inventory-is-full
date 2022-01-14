@@ -139,3 +139,4 @@ bin/pip3.7
 bin/python
 bin/python3
 include/site/python3.7/greenlet/greenlet.h
+bin/jsonschema
