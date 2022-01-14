@@ -1,28 +1,41 @@
-from api.inventory.models import Item
+from api.inventory.models import Base, Item
 from api import db
+from dataclasses import asdict
 
+class postgres_dao:
+    def __init__(self):
+        pass
 
-
-class postres_dao:
-
-    def create_product(self, product_code, name, price, weight):
-        db.session.add(Item(
-            product_code=product_code,
-            name=name,
-            price=price,
-            weight=weight))
+    def create_product(self, name, price, weight, description=None):
+        product = Item(
+                    name=name,
+                    price=price,
+                    weight=weight,
+                    description=description)
+        db.session.add(product)
         self.commit()
+        return asdict(product)
     
     
-    def get_product(self, product_code):
-        Item.query(product_code=product_code)
-        self.commit()
+    def get_product(self, id):
+        product = Item.query(id=id).one()
+        return asdict(product)
         
-    def update_product():
-        pass
+    def update_product(self, id, fields):
+        product = Item.query.filter_by(id=id).one()
+        product_dict = asdict(product)
+        for field in fields:
+            if field in product_dict:
+                product.__setattr__(field, fields[field])
+        self.commit()
+        return asdict(product)
 
-    def delete_product():
-        pass
+        
+        
+
+    def delete_product(self,id):
+        Item.query.filter_by(id=id).one().delecte()
+        self.commit()
 
     def commit(self):
         db.session.commit()
