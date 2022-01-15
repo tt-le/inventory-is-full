@@ -6,6 +6,9 @@ class postgres_dao:
     def __init__(self):
         pass
 
+    def get_product_field_names(self):
+        return Item.__table__.columns.keys()
+
     def create_product(self, name, price, weight, description=None):
         product = Item(
                     name=name,
@@ -30,12 +33,12 @@ class postgres_dao:
         self.commit()
         return asdict(product)
 
-        
-        
-
     def delete_product(self,id):
-        Item.query.filter_by(id=id).one().delecte()
+        Item.query.filter_by(id=id).one().delete()
         self.commit()
+
+    def get_all_product(self):
+        return Item.query.all()
 
     def commit(self):
         db.session.commit()
