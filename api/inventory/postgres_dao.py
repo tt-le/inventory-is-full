@@ -21,7 +21,7 @@ class postgres_dao:
     
     
     def get_product(self, id):
-        product = Item.query(id=id).one()
+        product = Item.query.filter_by(id=id).one()
         return asdict(product)
         
     def update_product(self, id, fields):

@@ -35,6 +35,7 @@ def create_app(test_config=None):
     
     # db = SQLAlchemy(app)
     # migrate = Migrate(app, db)
+    from api.inventory.models import Item
     retry_db_connection(app)
 
 
