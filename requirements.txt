@@ -13,7 +13,7 @@ Jinja2==3.0.3
 jsonschema==4.4.0
 Mako==1.1.6
 MarkupSafe==2.0.1
-psycopg2==2.9.3
+psycopg2-binary==2.9.3
 pyrsistent==0.18.0
 python-dotenv==0.19.2
 six==1.16.0

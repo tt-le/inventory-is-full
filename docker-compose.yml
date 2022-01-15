@@ -1,24 +1,33 @@
 version: "3.9"
 services:
+  database:
+      container_name: postgres
+      image: postgres:13-alpine
+      env_file: .env
+      ports:
+        - "5432:5432"
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5432"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+      volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
   webserver:
     build: 
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - database
+    # command: >
+    #   sh -c "python -m flask db init &&
+    #          python -m flask db migrate &&
+    #          python -m flask db upgrade"
+    restart: on-failure
     environment:
       - POSTGRES_ADDR=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
       - FLASK_ENV=docker
+      - FLASK_APP=run.py
     ports:
-      - "8000:8000"
-  database:
-    container_name: postgres
-    image: postgres:13-alpine
-    env_file: .env
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - db_volume:/var/lib/postgresql
-volumes:
-  db_volume:
+      - "8080:8080"

@@ -18,7 +18,20 @@ Install the necessary dependencies into the virtual environment
 bin/pip install -r requirements.txt
 ```
 
+## Running locally:
+
+Set environment variables
+```
+source .env
+```
+
+Start the application
+```
+bin/python run.py
+```
+
+## Running with Docker:
 
 ```
-bin/pip freeze > requirements.txt
+docker-compose up .
 ```
