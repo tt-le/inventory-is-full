@@ -1,4 +1,6 @@
+from dataclasses import asdict
 from functools import wraps
+from io import StringIO
 from flask import (
     jsonify,
     request,
@@ -6,8 +8,18 @@ from flask import (
     g
 )
 from jsonschema import Draft202012Validator
-from werkzeug.exceptions import BadRequest
+import csv
 
+def export_csv(table, table_fields):
+    with StringIO() as io:
+        writer = csv.writer(io, delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(table_fields)
+        for row in table:
+            row = list(asdict(row).values())
+            writer.writerow(row)
+        return io.getvalue()
+    
+    
 
 def validate_json(f):
     @wraps(f)
@@ -22,10 +34,6 @@ def validate_json(f):
             return make_response(response, 400)
         return f(*args, **kw)
     return wrapper
-
-
-
-
 
 def validate_schema(schema):
     validator = Draft202012Validator(schema)
