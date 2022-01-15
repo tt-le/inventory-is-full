@@ -1,30 +1,39 @@
+from dataclasses import asdict
 from werkzeug.wrappers import response
 from api import inventory
+from api.inventory.models import Base
 from api.inventory.postgres_dao import postgres_dao
-from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, jsonify, \
-                  make_response, url_for
-from api.inventory.utils import validate_json, validate_schema
+from flask import Blueprint, g, jsonify, make_response
+from api.inventory.utils import validate_json, validate_schema, export_csv
 from api.inventory.schemas.item_schema import create_item, update_item
 from sqlalchemy.exc import NoResultFound
 
 inventory_service = Blueprint('inventory', __name__, url_prefix='/inventory')
 
-
+@inventory_service.route('/product/export', methods=['GET'])
 def generate_csv():
-    pass
-
+    response = make_response()
+    try:
+        products = postgres_dao().get_all_product()
+        product_fields = postgres_dao().get_product_field_names()[2:]
+        response.set_data(export_csv(products,product_fields))
+        response.headers["Content-Disposition"] = "attachment; filename=Products.csv"
+        response.headers["Content-type"] = "text/csv"
+        response.status_code = 200
+        return response
+    except BaseException as e:
+        # TODO Should log the exception instead and write a relevant message back
+        return make_response({'message':repr(e)}, 500)
+    
 @inventory_service.route('/product', methods=['POST'])
 @validate_json
 @validate_schema(create_item)
 def create_product():
-    response = {'success': False,
-                'message':'',
+    response = {'message':'',
                 'payload':{}}
     try:
         payload = g.parsed_json
         product = postgres_dao().create_product(**payload)
-        response['success'] = True
         response['message'] = "CREATE-OK"
         response['payload'] = product
         code = 201
@@ -38,12 +47,10 @@ def create_product():
 
 @inventory_service.route('/product/<id>', methods=['GET'])
 def get_product(id):
-    response = {'success': False,
-                'message':'',
+    response = {'message':'',
                 'payload':{}}
     try:
         product = postgres_dao().get_product(id)
-        response['success'] = True
         response['message'] = "OK"
         response['payload'] = product
         code = 200
@@ -61,13 +68,11 @@ def get_product(id):
 @validate_json
 @validate_schema(update_item)
 def update_product(id):
-    response = {'success': False,
-                'message':'',
+    response = {'message':'',
                 'payload':{}}
     try:
         payload = g.parsed_json
         product = postgres_dao().update_product(id=id,fields=payload)
-        response['success'] = True
         response['message'] = "UPDATE-OK"
         response['payload'] = product
         code = 200
@@ -84,12 +89,10 @@ def update_product(id):
 
 @inventory_service.route('/product/<id>', methods=['POST', 'DELETE'])
 def delete_product(id):
-    response = {'success': False,
-                'message':'',
+    response = {'message':'',
                 'payload':{}}
     try:
         product = postgres_dao().delete_product(id)
-        response['success'] = True
         response['message'] = "DELETE-OK"
         response['payload'] = product
         code = 200
