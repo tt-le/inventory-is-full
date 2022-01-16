@@ -182,7 +182,7 @@ curl --request GET 'http://localhost:8080/inventory/product/export'
 ```
 id,name,price,weight,quantity,description
 1,Lay's Original,1.99,0.001,1000,Nice crips bag of salty air!
-3,Lay's BBQ,1.99,0.001,200,Nice crips bag of smokey air!
-4,Lay's Ketchup,1.99,0.001,100,Nice crips bag of tomatoee air!
-5,Lay's Jalapeno,1.99,0.001,100,Nice crips bag of spicy air!
+2,Lay's BBQ,1.99,0.001,200,Nice crips bag of smokey air!
+3,Lay's Ketchup,1.99,0.001,100,Nice crips bag of tomatoee air!
+4,Lay's Jalapeno,1.99,0.001,100,Nice crips bag of spicy air!
 ```
