@@ -64,7 +64,7 @@ def get_product(id):
     finally:
         return make_response(jsonify(response), code)
 
-@inventory_service.route('/product/<id>', methods=['PUT', 'PATCH'])
+@inventory_service.route('/product/<id>', methods=['PATCH'])
 @validate_json
 @validate_schema(update_item)
 def update_product(id):

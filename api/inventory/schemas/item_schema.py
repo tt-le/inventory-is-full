@@ -22,6 +22,11 @@ create_item = {
         "description":"Price per unit of product",
         "type":"number",
         "exclusiveMinimum": 0
+       },
+       "quantity":{
+        "description":"Quantity of unit of product",
+        "type":"number",
+        "exclusiveMinimum": 0
        }
     },
     "additionalProperties": False,
@@ -54,6 +59,11 @@ update_item = {
        },
        "price":{
         "description":"Price per unit of product",
+        "type":"number",
+        "exclusiveMinimum": 0
+       },
+       "quantity":{
+        "description":"Quantity of unit of product",
         "type":"number",
         "exclusiveMinimum": 0
        }

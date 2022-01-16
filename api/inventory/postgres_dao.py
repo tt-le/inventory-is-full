@@ -9,12 +9,13 @@ class postgres_dao:
     def get_product_field_names(self):
         return Item.__table__.columns.keys()
 
-    def create_product(self, name, price, weight, description=None):
+    def create_product(self, name, price, weight, description=None, quantity=0):
         product = Item(
                     name=name,
                     price=price,
                     weight=weight,
-                    description=description)
+                    description=description,
+                    quantity=quantity)
         db.session.add(product)
         self.commit()
         return asdict(product)

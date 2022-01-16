@@ -30,7 +30,7 @@ def validate_json(f):
             msg = "payload must be a valid json"
             response = jsonify(dict(success=False,
                                         message=msg,
-                                        errors=e))
+                                        errors=repr(e)))
             return make_response(response, 400)
         return f(*args, **kw)
     return wrapper
