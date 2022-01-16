@@ -1,10 +1,10 @@
-# inventory-is-full
+# 🛒 inventory-is-full
 
-🛒 Shopify Backend Developer Intern Challenge: An inventory tracking service for a logistic company.
+Shopify Backend Developer Intern Challenge: An inventory tracking service for a logistic company.
+
 
 ---
-
-## 🐳 Docker deployment
+### 🐳 Docker deployment
 ---
 
 The following section requires the docker compose and docker engine.
@@ -14,7 +14,7 @@ On **Linux**, they are installed seperately.  First the engine [here](https://do
 docker compose [here](https://docs.docker.com/compose/install/).
 
 ### Running with Docker:
-Run the following command and the API and a database container will start up.
+1. Run the following command and the API and a database container will start up.
 ```
 docker-compose up 
 ```
@@ -36,12 +36,12 @@ webserver_1  |  * Debugger PIN: 716-097-762
 ```
 
 ---
-## 📝 Test some endpoints
+### 📝 Test some endpoints
 ---
 NB: for the following section you may use postman, curl or even your favourite browser to 
 make the API calls.
 
-First let's try to get a product with id 1:
+1. First let's try to get a product with id 1:
 
 ```
 curl --request GET -i -o - 'http://localhost:8080/inventory/product/1'
@@ -63,7 +63,7 @@ Date: Sun, 16 Jan 2022 00:02:54 GMT
 }
 ```
 
-Let's create a product:
+2. Let's create a product:
 
 ```
 curl --request POST -i -o - 'http://localhost:8080/inventory/product' \
@@ -95,7 +95,7 @@ Date: Sun, 16 Jan 2022 00:39:43 GMT
 }
 ```
 
-Great! Now we can to to fetch this object from the database.
+3. Great! Now we can to to fetch this object from the database.
 
 ```
 curl --request GET -i -o - 'http://localhost:8080/inventory/product/1'
@@ -125,7 +125,7 @@ Date: Sun, 16 Jan 2022 00:34:39 GMT
 
 ```
 
-Let's modify the quantity to 55 and the price to 1.99
+4. Let's modify the quantity to 55 and the price to 1.99
 
 ```
 curl --request PATCH -i -o - 'http://localhost:8080/inventory/product/1' \
@@ -159,7 +159,7 @@ Date: Sun, 16 Jan 2022 01:04:49 GMT
 }
 ```
 
-Let's add some more product and export a csv!
+5. Let's add some more product and export a csv!
 
 ```
 curl --request POST 'http://localhost:8080/inventory/product' \
@@ -173,7 +173,7 @@ curl --request POST 'http://localhost:8080/inventory/product' \
 --data-raw '{"description": "Nice crips bag of spicy air!", "name": "Lay'\''s Jalapeno", "price": 1.99, "quantity": 100, "weight": 0.001}'
 ```
 
-Export the csv with the following curl; or just visit the url on a browser!
+6. Export the csv with the following curl; or just visit the url on a browser!
 
 ```
 curl --request GET 'http://localhost:8080/inventory/product/export' 
