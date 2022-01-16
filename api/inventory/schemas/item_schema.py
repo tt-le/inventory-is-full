@@ -16,17 +16,17 @@ create_item = {
        "weight":{
         "description":"Weight per unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        },
        "price":{
         "description":"Price per unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        },
        "quantity":{
         "description":"Quantity of unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        }
     },
     "additionalProperties": False,
@@ -55,17 +55,17 @@ update_item = {
        "weight":{
         "description":"Weight per unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        },
        "price":{
         "description":"Price per unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        },
        "quantity":{
         "description":"Quantity of unit of product",
         "type":"number",
-        "exclusiveMinimum": 0
+        "minimum": 0
        }
     },
     "additionalProperties": False,

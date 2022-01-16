@@ -28,9 +28,7 @@ def validate_json(f):
             request.json
         except Exception as e:
             msg = "payload must be a valid json"
-            response = jsonify(dict(success=False,
-                                        message=msg,
-                                        errors=repr(e)))
+            response = jsonify({'message':msg, 'payload':{'errors':repr(e)}})
             return make_response(response, 400)
         return f(*args, **kw)
     return wrapper
@@ -45,9 +43,7 @@ def validate_schema(schema):
             print(json)
             errors = [error.message for error in validator.iter_errors(json)]
             if errors:
-                response = jsonify(dict(success=False,
-                                        message="invalid json",
-                                        errors=errors))
+                response = jsonify({'message':'invalid json','payload':{'errors':errors}})
                 return make_response(response, 400)
             else:
                 g.parsed_json = {}
