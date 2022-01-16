@@ -38,7 +38,7 @@ webserver_1  |  * Debugger PIN: 716-097-762
 ---
 ### 📝 Test some endpoints
 ---
-NB: for the following section you may use postman, curl or even your favourite browser to 
+NB: for the following section you may use postman, curl or your favourite HTTP client to 
 make the API calls.
 
 1. First let's try to get a product with id 1:
