@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+  client-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/app/inventory-openapi.json
+    links:
+      - webserver
+    ports:
+      - "5050:8080"
+    volumes:
+        - ./specification:/app
   database:
       container_name: postgres
       image: postgres:13-alpine
@@ -13,15 +24,10 @@ services:
         retries: 5
       volumes:
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
   webserver:
     build: 
       context: .
       dockerfile: Dockerfile
-    # command: >
-    #   sh -c "python -m flask db init &&
-    #          python -m flask db migrate &&
-    #          python -m flask db upgrade"
     restart: on-failure
     environment:
       - POSTGRES_ADDR=postgres

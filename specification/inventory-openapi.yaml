@@ -6,7 +6,7 @@ info:
     email: tienthedev@gmail.com
   version: 1.0.0
 servers:
-- url: https://localhost:8080/inventory
+- url: http://localhost:8080/inventory
 tags:
 - name: product
   description: Everything about your products
