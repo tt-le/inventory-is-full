@@ -41,7 +41,7 @@ Note: The ports that need to be free are the following: 5432, 8080 and 5050 for 
 ### 📝 Test some endpoints
 ---
 
-You can either use the provided swagger-ui one your browser. Or if you prefer to do call directly to the API
+You can either use the provided swagger-ui one your browser. Or if you prefer to do calls directly to the API
 continue to the [curl section](###💪curl).
 
 Visit [swagger-ui](http:localhost:5050/) on your browser. 
@@ -59,7 +59,7 @@ Visit [swagger-ui](http:localhost:5050/) on your browser.
 ### 💪 cURL
 ---
 
-NB: for the following section you may use postman, curl or your favourite HTTP client to 
+**NB**: for the following section you may use postman, curl or your favourite HTTP client to 
 make the API calls.
 
 1. First let's try to get a product with id 1:
