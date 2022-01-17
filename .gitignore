@@ -102,7 +102,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -127,3 +126,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+bin/activate
+bin/activate.csh
+bin/activate.fish
+bin/easy_install
+bin/easy_install-3.7
+bin/flask
+bin/pip
+bin/pip3
+bin/pip3.7
+bin/python
+bin/python3
+include/site/python3.7/greenlet/greenlet.h
+bin/jsonschema

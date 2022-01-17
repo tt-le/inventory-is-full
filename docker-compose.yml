@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  client-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/app/inventory-openapi.json
+    links:
+      - webserver
+    ports:
+      - "5050:8080"
+    volumes:
+        - ./specification:/app
+  database:
+      container_name: postgres
+      image: postgres:13-alpine
+      env_file: .env
+      ports:
+        - "5432:5432"
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5432"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+      volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  webserver:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    environment:
+      - POSTGRES_ADDR=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - FLASK_ENV=docker
+      - FLASK_APP=run.py
+    ports:
+      - "8080:8080"

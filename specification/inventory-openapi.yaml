@@ -1,0 +1,340 @@
+openapi: 3.0.1
+info:
+  title: Inventory-is-full API
+  description: This is an inventory logistsics api for managing products
+  contact:
+    email: tienthedev@gmail.com
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/inventory
+tags:
+- name: product
+  description: Everything about your products
+paths:
+  /product:
+    post:
+      tags:
+        - product
+      summary: Add a new product to the inventory
+      requestBody:
+        required: true
+        description: All fields are required
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBody'
+      responses:
+        201:
+          description: Successful creation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: CREATE-OK
+                payload:
+                  name: Lay's Ketchup
+                  description: Nice crips bag of tomatoee air
+                  weight: "0.001"
+                  price: "0.99"
+                  quantity: 100
+        400:
+          description: Invalid input
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidInput'
+        500:
+          description: Internal server error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      x-codegen-request-body-name: Product
+  /product/{id}:
+    get:
+      tags:
+          - product
+      summary: Get a product by ID
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the product to get
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Successful fetch
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: OK
+                payload:
+                  name: Lay's Ketchup
+                  description: Nice crips bag of tomatoee air
+                  weight: "0.001"
+                  price: "0.99"
+                  quantity: 100
+                  
+        400:
+          description: Invalid input
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidInput'
+        404:
+          description: Product with id not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: Internal server error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    delete:
+      tags:
+        - product
+      summary: Delete a product by ID
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the product to get
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Successful deletion
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: DELETE-OK
+                payload:
+                  name: Lay's Ketchup
+                  description: Nice crips bag of tomatoee air
+                  weight: "0.001"
+                  price: "0.99"
+                  quantity: 100
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidInput'
+        404:
+          description: Product with id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      tags:
+        - product
+      summary: Update a product attributes by ID
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the product to modify
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        description: At least one field is required
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBody'
+      responses:
+        200:
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: UPDATE-OK
+                payload:
+                  name: Lay's Ketchup
+                  description: Nice crips bag of tomatoee air
+                  weight: "0.001"
+                  price: "1.99"
+                  quantity: 200
+        400:
+          description: Invalid input
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidInput'
+        404:
+          description: Product with id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: Internal server error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+      x-codegen-request-body-name: product
+  /product/export:
+    get:
+      tags:
+          - product
+      summary: Export a csv of the product table
+      responses:
+        200:
+          description: Successful csv transfer
+          content:
+            text/csv:
+              schema:
+                type: string
+              example: "id,name,price,weight,quantity,description\n1,Lay's Original,1.99,0.001,1000,Nice crips bag of salty air!\n2,Lay's BBQ,1.99,0.001,200,Nice crips bag of smokey air!"
+        500:
+          description: Internal server error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+components:
+  schemas:
+    Product:
+      properties:
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Brief description of the product
+        weight:
+          minimum: 0
+          type: number
+          description: Weight per unit of product
+        price:
+          minimum: 0
+          type: number
+          description: Price per unit of product
+        quantity:
+          minimum: 0
+          type: number
+          description: Quantity of unit of product
+    CreateBody:
+      required:
+      - name
+      - price
+      - weight
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Brief description of the product
+        weight:
+          minimum: 0
+          type: number
+          description: Weight per unit of product
+        price:
+          minimum: 0
+          type: number
+          description: Price per unit of product
+        quantity:
+          minimum: 0
+          type: number
+          description: Quantity of unit of product
+      example:
+        name: Lay's Ketchup
+        description: Nice crips bag of tomatoee air
+        weight: 0.001
+        price: 0.99
+        quantity: 100
+    UpdateBody:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        weight:
+          minimum: 0
+          type: number
+        price:
+          minimum: 0
+          type: number
+        quantity:
+          minimum: 0
+          type: integer
+      example:
+          name: Lay's Ketchup
+          description: Nice crips bag of tomatoee air
+          weight: 0.001
+          price: 1.99
+          quantity: 200
+      additionalProperties: False
+      minProperties: 1
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
+        payload:
+          type: object
+          oneOf:
+            - {}
+            - $ref: '#/components/schemas/Product'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+        payload:
+          type: object
+          properties: {}
+      example:
+        message: Exception Error message
+        payload: {}
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+        payload:
+          type: object
+          properties: {}
+      example:
+        message: 'No product found with id: 99'
+        payload: {}
+    InvalidInput:
+      type: object
+      properties:
+        message:
+          type: string
+        payload:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: string
+      example:
+        message: invalid json
+        payload:
+          errors:
+          - Additional properties are not allowed ('invalid parameter' was unexpected)
