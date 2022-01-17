@@ -17,8 +17,10 @@ paths:
         - product
       summary: Add a new product to the inventory
       requestBody:
+        required: true
+        description: All fields are required
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateBody'
       responses:
@@ -151,11 +153,12 @@ paths:
         schema:
           type: integer
       requestBody:
+        required: true
+        description: At least one field is required
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateBody'
-        required: false
       responses:
         200:
           description: Successful update
@@ -211,6 +214,26 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 components:
   schemas:
+    Product:
+      properties:
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Brief description of the product
+        weight:
+          minimum: 0
+          type: number
+          description: Weight per unit of product
+        price:
+          minimum: 0
+          type: number
+          description: Price per unit of product
+        quantity:
+          minimum: 0
+          type: number
+          description: Quantity of unit of product
     CreateBody:
       required:
       - name
@@ -273,6 +296,9 @@ components:
           type: string
         payload:
           type: object
+          oneOf:
+            - {}
+            - $ref: '#/components/schemas/Product'
     ServerError:
       type: object
       properties:

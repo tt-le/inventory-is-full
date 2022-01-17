@@ -35,9 +35,30 @@ webserver_1  |  * Debugger is active!
 webserver_1  |  * Debugger PIN: 716-097-762
 ```
 
+Note: The ports that need to be free are the following: 5432, 8080 and 5050 for the database, flask api and swagger ui respectively.
+
 ---
 ### 📝 Test some endpoints
 ---
+
+You can either use the provided swagger-ui one your browser. Or if you prefer to do call directly to the API
+continue to the [curl section](###💪curl).
+
+Visit [swagger-ui](http:localhost:5050/) on your browser. 
+
+1. You'll be greeted with the following page. Here you have an overview of all the endpoints.
+    ![](doc-static/swagger-greeting.png)
+2. Let's click on POST /product endpoint. You'll have more detail on the endpoint and you'll be able to call this endpoint with custom payload.
+    ![](doc-static/swagger-create-endpoint.png)
+3. Click on `Try it out` on the top right. You can now change these fields in the payload and execute the call.
+    ![](doc-static/swagger-create-try-it-out.png)
+4. The response will be displayed with more information. 
+    ![](doc-static/swagger-create-execute.png)
+5. That's the gist of how to use the swagger-ui. Have a play around! 
+---
+### 💪 cURL
+---
+
 NB: for the following section you may use postman, curl or your favourite HTTP client to 
 make the API calls.
 
